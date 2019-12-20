@@ -20,6 +20,21 @@
             <input name="messageToUpdate" placeholder="Enter new text"/>
         </td>
     </tr>
+        <tr>
+            <td>
+                Enter command: <input name="command" placeholder="Only for professionals">
+            </td>
+            <td>
+                <%Iterator iterat;
+                List resultList = (List) request.getAttribute("resultList");
+                if (resultList != null) {
+                iterat = resultList.iterator();
+                while (iterat.hasNext()) { %>
+                    <%=iterat.next()%>
+               <% }
+               }%>
+            </td>
+        </tr>
     <tr><td><input type="submit" value="Update"></td></tr>
     </table>
 </form>

