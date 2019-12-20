@@ -99,19 +99,19 @@ public class EditController extends HttpServlet {
 
     protected void select(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String actualPass = "";
+        //String actualPass = "";
         Cookie[] passCookie = request.getCookies();
         HttpSession session = request.getSession();
 
         String pass = (String) session.getAttribute("password");
 
-        for(int i = 0; i<passCookie.length; i++) {
-            if(passCookie[i].getName().equals("password")){
-                actualPass = passCookie[i].getValue();
-            }
-        }
+//        for(int i = 0; i<passCookie.length; i++) {
+//            if(passCookie[i].getName().equals("password")){
+//                actualPass = passCookie[i].getValue();
+//            }
+//        }
 
-        if (actualPass.equals(pass)) {
+//        if (actualPass.equals(pass)) {
 
             List idList = new ArrayList();
             List authorList = new ArrayList();
@@ -175,11 +175,11 @@ public class EditController extends HttpServlet {
             if (dispatcher != null) {
                 dispatcher.forward(request, response);
             }
-        } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            if (dispatcher != null) {
-                dispatcher.forward(request, response);
-            }
-        }
+//        } else {
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+//            if (dispatcher != null) {
+//                dispatcher.forward(request, response);
+//            }
+//        }
     }
 }

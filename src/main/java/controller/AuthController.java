@@ -38,21 +38,23 @@ public class AuthController extends HttpServlet {
                 password = rs.getString("password");
                 role = rs.getString("role");
             }
-                if (username.equals(login) && password.equals(pass) && role.equals(User.ROLE.ADMIN.toString())) {
-                    session.setAttribute("username", username);
-                    session.setAttribute("password", password);
-                    session.setAttribute("role", role);
-                    request.getRequestDispatcher("WEB-INF/view/admin_menu.jsp").forward(request, response);
-                } else if (username.equals(login) && password.equals(pass) && role.equals(User.ROLE.USER.toString())) {
+//                if (username.equals(login) && password.equals(pass) && role.equals(User.ROLE.ADMIN.toString())) {
+            if (role!=null && role.equals(User.ROLE.ADMIN.toString())) {
+                session.setAttribute("username", username);
+                session.setAttribute("password", password);
+                session.setAttribute("role", role);
+                request.getRequestDispatcher("WEB-INF/view/admin_menu.jsp").forward(request, response);
+                //} else if (username.equals(login) && password.equals(pass) && role.equals(User.ROLE.USER.toString())) {
+            } else if (role!=null && role.equals(User.ROLE.USER.toString())) {
                     session.setAttribute("username", username);
                     session.setAttribute("password", password);
                     session.setAttribute("role", role);
                     request.getRequestDispatcher("WEB-INF/view/user_menu.jsp").forward(request, response);
-                } else {
-                    passCookie.setMaxAge(0);
-                    response.addCookie(passCookie);
-                    request.getRequestDispatcher("WEB-INF/loginError.jsp").forward(request, response);
-                }
+            } else {
+                passCookie.setMaxAge(0);
+                response.addCookie(passCookie);
+                request.getRequestDispatcher("WEB-INF/loginError.jsp").forward(request, response);
+            }
             rs.close();
             st.close();
         }
